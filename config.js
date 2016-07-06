@@ -1,4 +1,4 @@
-const env = process.env.NODE_ENV
+const env = process.env.NODE_ENV || 'dev'
 
 const config = {}
 
@@ -7,15 +7,30 @@ config.default = {
 }
 
 config.dev = {
-
+  mongoUrl: ``,
+  redis: {
+    port: 6379,
+    host: `docker.me`,
+    namespace: `LOGIN_DEV`,
+  },
 }
 
 config.test = {
-
+  mongoUrl: ``,
+  redis: {
+    port: 6379,
+    host: `docker.me`,
+    namespace: `LOGIN_TEST`,
+  },
 }
 
 config.prod = {
-
+  mongoUrl: ``,
+  redis: {
+    port: 6379,
+    host: `docker.me`,
+    namespace: `LOGIN_PROD`,
+  },
 }
 
 export default Object.assign({}, config.default, config[env])

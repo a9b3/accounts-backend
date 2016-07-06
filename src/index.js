@@ -3,6 +3,9 @@ import config from '../config.js'
 
 async function main() {
   const server = new Server()
+  server.initialize({
+    namespace: config.redis.namespace,
+  })
   await server.listen(config.port)
   console.log(`listening on port ${config.port}`)
 }

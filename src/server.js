@@ -2,6 +2,15 @@ import express from 'express'
 import cors from 'cors'
 import bodyParser from 'body-parser'
 import router from './router.js'
+import redis from './services/redis.js'
+import invariant from 'invariant'
+
+/**
+ * Initialize services here
+ */
+async function initialize(opts) {
+  redis.initialize(opts)
+}
 
 export default class Server {
   _bootstrap = () => {
@@ -20,6 +29,11 @@ export default class Server {
 
     this._bootstrap()
     this._setupRouter()
+  }
+
+  initialize = async (opts) => {
+    invariant(opts, `'opts' must be provided`)
+    await initialize(opts)
   }
 
   listen(port = 8080) {
