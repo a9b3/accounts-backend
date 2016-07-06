@@ -6,9 +6,9 @@
   "scripts": {
     "postversion": "git push && git push --tags && npm publish",
     "lint": "./node_modules/eslint/bin/eslint.js .",
-    "test": "npm run lint && npm run test:js",
-    "test:js": "./node_modules/mocha/bin/mocha --compilers js:babel-register --require babel-polyfill",
-    "test:js:watch": "./node_modules/mocha/bin/mocha --compilers js:babel-register --require babel-polyfill --watch --recursive"
+    "test": "NODE_ENV=test npm run lint && npm run test:js",
+    "test:js": "NODE_ENV=test ./node_modules/mocha/bin/mocha --compilers js:babel-register --require babel-polyfill",
+    "test:js:watch": "NODE_ENV=test ./node_modules/mocha/bin/mocha --compilers js:babel-register --require babel-polyfill --watch --recursive"
   },
   "homepage": "",
   "bugs": {
@@ -43,11 +43,14 @@
     "app-module-path": "1.0.6",
     "babel-polyfill": "6.7.4",
     "babel-register": "6.7.2",
+    "bcrypt": "^0.8.7",
     "bluebird": "^3.4.1",
     "body-parser": "^1.15.2",
     "cors": "^2.7.1",
     "express": "^4.14.0",
     "invariant": "^2.2.1",
+    "mongoose": "^4.5.3",
+    "node-uuid": "^1.4.7",
     "redis": "^2.6.2"
   }
 }

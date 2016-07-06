@@ -7,7 +7,7 @@ config.default = {
 }
 
 config.dev = {
-  mongoUrl: ``,
+  mongoUrl: `docker.me:27017`,
   redis: {
     port: 6379,
     host: `docker.me`,
@@ -16,7 +16,7 @@ config.dev = {
 }
 
 config.test = {
-  mongoUrl: ``,
+  mongoUrl: `docker.me:27018`,
   redis: {
     port: 6379,
     host: `docker.me`,

@@ -28,13 +28,27 @@ const UserSchema = new Schema({
   },
 })
 
+UserSchema.set('toJSON', {
+  transform(doc, ret) {
+    const retJson = {
+      email: ret.email,
+      id: ret.id,
+      verified: ret.verified,
+    }
+    return retJson
+  },
+})
+
+UserSchema.methods.validPassword = function validPassword(password) {
+  return bcrypt.compareSync(password, this.password)
+}
+
 UserSchema.statics.signup = async function create({
   email,
   password,
 }) {
   invariant(email && password, `'email' and 'password' must be provided`)
 
-  // if existing user throw error
   const existingUser = await this.findOne({ email }).exec()
   if (existingUser) throw new Error(`Email ${email} already exist`)
 
@@ -46,7 +60,8 @@ UserSchema.statics.signup = async function create({
     verified: false,
     id: uuid.v4(),
   })
-  return await newUser.save()
+  const createdUser = await newUser.save()
+  return createdUser.toJSON()
 }
 
 UserSchema.statics.login = async function login({
@@ -54,6 +69,13 @@ UserSchema.statics.login = async function login({
   password,
 }) {
   invariant(email && password, `'email' and 'password' must be provided`)
+
+  const existingUser = await this.findOne({ email }).exec()
+  if (!existingUser) throw new Error(`Email ${email} does not exist`)
+  if (!existingUser.validPassword(password)) {
+    throw new Error(`Invalid password`)
+  }
+  return existingUser.toJSON()
 }
 
 let User

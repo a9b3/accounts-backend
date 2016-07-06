@@ -3,6 +3,7 @@ import cors from 'cors'
 import bodyParser from 'body-parser'
 import router from './router.js'
 import redis from './services/redis.js'
+import mongooseDb from './services/mongoose-db.js'
 import invariant from 'invariant'
 
 /**
@@ -10,6 +11,13 @@ import invariant from 'invariant'
  */
 async function initialize(opts) {
   redis.initialize(opts)
+  await mongooseDb.start({
+    url: opts.mongoUrl,
+  })
+}
+
+async function teardown() {
+  await mongooseDb.stop()
 }
 
 export default class Server {
@@ -47,6 +55,7 @@ export default class Server {
 
   async stop() {
     if (!this.server) return
+    await teardown()
     await this.server.close()
   }
 }
