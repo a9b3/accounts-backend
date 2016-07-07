@@ -43,11 +43,7 @@ UserSchema.methods.validPassword = function validPassword(password) {
   return bcrypt.compareSync(password, this.password)
 }
 
-UserSchema.statics.findOne = async function findOne(args) {
-  return this.findOne(args).exec()
-}
-
-UserSchema.statics.signup = async function create({
+UserSchema.statics.signup = async function signup({
   email,
   password,
 }) {

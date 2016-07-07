@@ -30,7 +30,7 @@ describe('models/user', () => {
     expect(user.email).toBe(fakeUserCredentials.email)
     expect(user.password).toNotExist()
 
-    const found = await User.find({ email: fakeUserCredentials.email })
+    const found = await User.find({ email: fakeUserCredentials.email }).exec()
     expect(found.length).toBe(1)
     expect(found[0].email).toBe(fakeUserCredentials.email)
   })

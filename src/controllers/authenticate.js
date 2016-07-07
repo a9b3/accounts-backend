@@ -1,21 +1,20 @@
 import invariant from 'invariant'
-import redis from '../services/redis.js'
 import User from '../models/user.js'
+import { create } from '../services/session-token.js'
 
-export default async function authenticate(req, res) {
+export default async function login(req, res) {
   const {
-    token,
+    email,
+    password,
   } = req.body
-  invariant(token, `'token' must be provided`)
 
-  const retreivedToken = await redis.get(`TOKEN/${token}`)
-  if (!retreivedToken) throw new Error(`Token does not exist`)
+  invariant(email && password, `'email', 'password' must be provided`)
 
-  const user = await User.findOne({ email: retreivedToken.user.email })
-  if (!user) throw new Error(`User does not exist`)
+  const user = await User.login({ email, password })
+  const token = await create(user)
 
   res.send({
     user,
-    token: retreivedToken,
+    token,
   })
 }
