@@ -4,6 +4,7 @@ const config = {}
 
 config.default = {
   port: 8080,
+  secret: 'topsecret',
 }
 
 config.dev = {

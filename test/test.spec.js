@@ -1,6 +1,7 @@
 import should from 'should'
 import axios from 'axios'
 import Server from '../src/server.js'
+import config from '../config.js'
 
 describe('test works', () => {
   let server
@@ -16,11 +17,5 @@ describe('test works', () => {
     server.stop()
     .then(() => done())
     .catch(done)
-  })
-
-  it('should work', async () => {
-    const res = await axios.get('http://localhost:8080')
-    should.exist(res)
-    res.status.should.equal(200)
   })
 })

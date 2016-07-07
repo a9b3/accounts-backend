@@ -1,6 +1,7 @@
 import express from 'express'
 import cors from 'cors'
 import bodyParser from 'body-parser'
+import cookieParser from 'cookie-parser'
 import router from './router.js'
 import redis from './services/redis.js'
 import mongooseDb from './services/mongoose-db.js'
@@ -9,10 +10,10 @@ import invariant from 'invariant'
 /**
  * Initialize services here
  */
-async function initialize(opts) {
-  redis.initialize(opts)
+async function initialize(config) {
+  redis.initialize(config.redis)
   await mongooseDb.start({
-    url: opts.mongoUrl,
+    url: config.mongoUrl,
   })
 }
 
@@ -25,6 +26,8 @@ export default class Server {
     this.app.use(cors())
     this.app.use(bodyParser.json())
     this.app.use(bodyParser.urlencoded({ extended: false }))
+    this.app.use(cookieParser())
+    this.app.use(`/public`, express.static(`${__dirname}/public`))
   }
 
   _setupRouter = () => {
@@ -39,9 +42,9 @@ export default class Server {
     this._setupRouter()
   }
 
-  initialize = async (opts) => {
-    invariant(opts, `'opts' must be provided`)
-    await initialize(opts)
+  initialize = async (config) => {
+    invariant(config, `'config' must be provided`)
+    await initialize(config)
   }
 
   listen(port = 8080) {

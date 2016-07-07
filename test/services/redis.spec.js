@@ -1,13 +1,10 @@
 import redis from '../../src/services/redis.js'
 import expect from 'expect'
+import config from '../../config.js'
 
 describe('services/redis', () => {
-  const TESTNS = 'TESTING_REDIS'
-
   beforeEach(() => {
-    redis.initialize({
-      namespace: TESTNS,
-    })
+    redis.initialize(config.redis)
   })
 
   afterEach(async done => {
@@ -30,7 +27,7 @@ describe('services/redis', () => {
       await redis.set(`foo`, 123)
       const keys = await redis.keys()
       expect(keys.length).toBe(1)
-      expect(keys[0]).toBe(`${TESTNS}/foo`)
+      expect(keys[0]).toBe(`${config.redis.namespace}/foo`)
     })
   })
 

@@ -9,6 +9,12 @@ class MongooseDb {
     mongoose.Promise = Promise
   }
 
+  /**
+   * Starts mongoose connection
+   *
+   * @param {String} url - eg. localhost:27017
+   * @returns {Promise} connection established
+   */
   start = async ({
     url,
   }) => {
@@ -25,6 +31,11 @@ class MongooseDb {
     })
   }
 
+  /**
+   * Closes mongoose connection
+   *
+   * @returns {Promise} connection closed
+   */
   stop = () => {
     return new Promise((resolve, reject) => {
       if (!this.connected) resolve()
@@ -37,6 +48,11 @@ class MongooseDb {
     })
   }
 
+  /**
+   * Drops entire database
+   *
+   * @returns {Promise}
+   */
   dangerouslyDropDb = async () => {
     if (!this.connected) return
     return mongoose.connection.db.dropDatabase()

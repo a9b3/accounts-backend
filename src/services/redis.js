@@ -1,6 +1,5 @@
 import redis from 'redis'
 import bluebird from 'bluebird'
-import config from '../../config.js'
 import invariant from 'invariant'
 
 class RedisClient {
@@ -9,8 +8,10 @@ class RedisClient {
 
   initialize = ({
     namespace,
+    port,
+    host,
   }) => {
-    invariant(namespace, `'namespace' should be provided.`)
+    invariant(port && host && namespace, `'port', 'host', 'namespace' must be provided`)
 
     if (this.client) return
     this.namespace = namespace
@@ -22,7 +23,7 @@ class RedisClient {
     bluebird.promisifyAll(redis.RedisClient.prototype)
     bluebird.promisifyAll(redis.Multi.prototype)
 
-    this.client = redis.createClient(config.redis.port, config.redis.host)
+    this.client = redis.createClient(port, host)
   }
 
   getClient = () => {
@@ -32,16 +33,30 @@ class RedisClient {
 
   get = async (key) => {
     const res = await this.getClient().getAsync(`${this.namespace}/${key}`)
-    return res
+    return JSON.parse(res)
   }
 
   set = async (key, value) => {
-    return this.getClient().setAsync(`${this.namespace}/${key}`, JSON.stringify(value))
+    const reply = await this.getClient().setAsync(`${this.namespace}/${key}`, JSON.stringify(value))
+    if (!reply) throw new Error(`Unable to set in redis`)
+    return reply
   }
 
-  flushDb = async (key) => {
-    const redisKey = key ? `${this.namespace}/${key}` : `${this.namespace}`
-    return this.getClient().delAsync(redisKey)
+  del = async (key) => {
+    return this.getClient().delAsync(`${this.namespace}/${key}`)
+  }
+
+  expire = async (key, expireSec) => {
+    const reply = await this.getClient().expireAsync(`${this.namespace}/${key}`, expireSec)
+    if (!reply) throw new Error(`Unable to set expiration`)
+    return reply
+  }
+
+  flushDb = async (key = '*') => {
+    const keysToDelete = await this.keys(key)
+    for (let i = 0; i < keysToDelete.length; i++) {
+      await this.getClient().delAsync(keysToDelete[i])
+    }
   }
 
   keys = async (key = '*') => {
