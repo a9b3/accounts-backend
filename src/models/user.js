@@ -39,7 +39,6 @@ UserSchema.set('toJSON', {
   },
 })
 
-
 UserSchema.methods.validPassword = function validPassword(password) {
   return bcrypt.compareSync(password, this.password)
 }
