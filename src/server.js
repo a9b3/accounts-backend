@@ -23,11 +23,19 @@ async function teardown() {
 
 export default class Server {
   _bootstrap = () => {
+    // this.app.use((req, res, next) => {
+    //   if (req.method === 'OPTIONS') {
+    //     res.setHeader('Access-Control-Allow-Origin', '*')
+    //     res.status(200)
+    //     res.end()
+    //   } else {
+    //     next()
+    //   }
+    // })
     this.app.use(cors())
     this.app.use(bodyParser.json())
     this.app.use(bodyParser.urlencoded({ extended: false }))
     this.app.use(cookieParser())
-    this.app.use(`/public`, express.static(`${__dirname}/public`))
   }
 
   _setupRouter = () => {

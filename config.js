@@ -3,7 +3,7 @@ const env = process.env.NODE_ENV || 'dev'
 const config = {}
 
 config.default = {
-  port: 8080,
+  port: 8081,
   secret: 'topsecret',
 }
 
@@ -17,6 +17,7 @@ config.dev = {
 }
 
 config.test = {
+  port: 9123,
   mongoUrl: `docker.me:27018`,
   redis: {
     port: 6379,

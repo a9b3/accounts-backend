@@ -1,8 +1,9 @@
 import invariant from 'invariant'
 import redis from '../services/redis.js'
 import User from '../models/user.js'
+import { tryCatchMiddleware } from '../services/middleware-helper.js'
 
-export default async function authenticate(req, res) {
+async function authenticate(req, res) {
   const {
     token,
   } = req.body
@@ -19,3 +20,5 @@ export default async function authenticate(req, res) {
     token: retreivedToken,
   })
 }
+
+export default tryCatchMiddleware(authenticate)

@@ -1,7 +1,9 @@
+import invariant from 'invariant'
 import User from '../models/user.js'
 import { create } from '../services/session-token.js'
+import { tryCatchMiddleware } from '../services/middleware-helper.js'
 
-export default async function signup(req, res) {
+async function signup(req, res) {
   const {
     email,
     password,
@@ -18,3 +20,5 @@ export default async function signup(req, res) {
   })
   // TODO send verification email here
 }
+
+export default tryCatchMiddleware(signup)
