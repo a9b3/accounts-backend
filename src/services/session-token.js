@@ -2,6 +2,7 @@ import jwt from 'jsonwebtoken'
 import invariant from 'invariant'
 import redis from './redis.js'
 import config from '../../config.js'
+import { tryCatchMiddleware } from './middleware-helper.js'
 
 const TOKEN = `TOKEN`
 const TOKEN_EXPIRE_WEEK = 1
@@ -11,14 +12,14 @@ const TOKEN_EXPIRE_MIN = TOKEN_EXPIRE_HOUR * 60
 const TOKEN_EXPIRE_SEC = TOKEN_EXPIRE_MIN * 60
 
 export async function middleware(req, res, next) {
-  const token = req.req && req.req.headers && req.req.headers['session-token']
+  const token = req.headers && req.headers['session-token']
 
   if (!token) return next('Must provide session-token in headers')
 
   jwt.verify(token, config.secret, async e => {
     if (e) next(e)
 
-    const tokenData = await redis.get(`${TOKEN}/token`)
+    const tokenData = await redis.get(`${TOKEN}/${token}`)
     if (!tokenData) return next('Token not found')
     req.user = tokenData
     next()
