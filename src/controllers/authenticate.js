@@ -7,6 +7,7 @@ async function login(req, res) {
   const {
     email,
     password,
+    // optional parameter, redirects to origin upon successful authentication
     origin,
   } = req.body
 
@@ -18,7 +19,7 @@ async function login(req, res) {
   res.send({
     user,
     token,
-    destination,
+    origin,
   })
 }
 
