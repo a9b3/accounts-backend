@@ -26,16 +26,28 @@ const UserSchema = new Schema({
     type: Boolean,
     required: true,
   },
+
+  username: {
+    type: String,
+  },
+  profilePic: {
+    type: String,
+  },
 })
 
+const blacklistedProps = [
+  '_id',
+  'password',
+  '__v',
+]
 UserSchema.set('toJSON', {
   transform(doc, ret) {
-    const retJson = {
-      email: ret.email,
-      id: ret.id,
-      verified: ret.verified,
+    for (let key in ret) {
+      if (blacklistedProps.indexOf(key) !== -1) {
+        delete ret[key]
+      }
     }
-    return retJson
+    return ret
   },
 })
 
