@@ -2,37 +2,56 @@ const env = process.env.NODE_ENV || 'dev'
 
 const config = {}
 
-config.default = {
-  port: 8081,
-  secret: 'topsecret',
-}
+// env overrides
+const port = process.env.PORT
+const mongoUrl = process.env.MONGO_URL
+const redisHost = process.env.REDIS_HOST
+const redisPort = process.env.REDIS_PORT
 
 config.dev = {
-  mongoUrl: `docker.me:27017`,
+  port: port || 8080,
+  secret: 'topsecret',
+  mongoUrl: mongoUrl || `docker.me:27017/accounts`,
   redis: {
-    port: 6379,
-    host: `docker.me`,
+    port: redisPort || 6379,
+    host: redisHost || `docker.me`,
     namespace: `LOGIN_DEV`,
   },
 }
 
 config.test = {
-  port: 9123,
-  mongoUrl: `docker.me:27018`,
+  port: port || 9123,
+  secret: 'topsecret',
+  mongoUrl: mongoUrl || `docker.me:27018/accountstest`,
   redis: {
-    port: 6379,
-    host: `docker.me`,
+    port: redisPort || 6379,
+    host: redisHost || `docker.me`,
     namespace: `LOGIN_TEST`,
   },
 }
 
-config.prod = {
-  mongoUrl: ``,
+// require env vars set
+config.travis = {
+  port: 8080,
+  secret: 'topsecret',
+  mongoUrl,
   redis: {
-    port: 6379,
-    host: `docker.me`,
+    port: redisPort,
+    host: redisHost,
+    namespace: `LOGIN_TEST`,
+  },
+}
+
+// require env vars set
+config.prod = {
+  port: port || 8080,
+  secret: 'topsecret',
+  mongoUrl: mongoUrl || `${process.env.MONGO_SERVICE_HOST}:${process.env.MONGO_SERVICE_PORT}/accounts`,
+  redis: {
+    port: process.env.REDIS_SERVICE_PORT,
+    host: process.env.REDIS_SERVICE_HOST,
     namespace: `LOGIN_PROD`,
   },
 }
 
-export default Object.assign({}, config.default, config[env])
+export default config[env]
