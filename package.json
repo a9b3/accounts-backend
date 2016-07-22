@@ -44,7 +44,7 @@
     "babel-polyfill": "6.7.4",
     "babel-preset-react": "^6.11.1",
     "babel-register": "6.7.2",
-    "bcrypt": "^0.8.7",
+    "bcryptjs": "^2.3.0",
     "bluebird": "^3.4.1",
     "body-parser": "^1.15.2",
     "cookie-parser": "^1.4.3",

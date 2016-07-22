@@ -1,5 +1,5 @@
 import mongoose, { Schema } from 'mongoose'
-import bcrypt from 'bcrypt'
+import bcrypt from 'bcryptjs'
 import uuid from 'node-uuid'
 import invariant from 'invariant'
 
