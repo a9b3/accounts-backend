@@ -9,6 +9,9 @@ import invariant from 'invariant'
 
 /**
  * Initialize services here
+ *
+ * @param {Object} config - config
+ * @return {Promise} null
  */
 async function initialize(config) {
   redis.initialize(config.redis)

@@ -51,7 +51,7 @@ class MongooseDb {
   /**
    * Drops entire database
    *
-   * @returns {Promise}
+   * @returns {Promise} null
    */
   dangerouslyDropDb = async () => {
     if (!this.connected) return

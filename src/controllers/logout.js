@@ -9,7 +9,7 @@ async function logout(req, res) {
 
   invariant(token, `'token' must be provided`)
 
-  const reply = await remove(token)
+  await remove(token)
 
   res.send({
     message: `ok`,

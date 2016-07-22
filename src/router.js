@@ -6,7 +6,6 @@ import verify from './controllers/verify.js'
 import logout from './controllers/logout.js'
 import getUser from './controllers/getUser.js'
 import lastErrorHandler from 'express-last-error-handler'
-import cors from 'cors'
 
 const router = new Router()
 

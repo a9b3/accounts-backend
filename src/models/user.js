@@ -42,7 +42,7 @@ const blacklistedProps = [
 ]
 UserSchema.set('toJSON', {
   transform(doc, ret) {
-    for (let key in ret) {
+    for (const key in ret) {
       if (blacklistedProps.indexOf(key) !== -1) {
         delete ret[key]
       }

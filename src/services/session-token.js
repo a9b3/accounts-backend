@@ -2,7 +2,6 @@ import jwt from 'jsonwebtoken'
 import invariant from 'invariant'
 import redis from './redis.js'
 import config from '../../config.js'
-import { tryCatchMiddleware } from './middleware-helper.js'
 
 const TOKEN = `TOKEN`
 const TOKEN_EXPIRE_WEEK = 1
