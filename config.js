@@ -46,10 +46,10 @@ config.travis = {
 config.prod = {
   port: port || 8080,
   secret: 'topsecret',
-  mongoUrl: mongoUrl || `${process.env.MONGO_SERVICE_HOST}:${process.env.MONGO_SERVICE_PORT}/accounts`,
+  mongoUrl: mongoUrl || `45.55.25.42:27017/accounts`,
   redis: {
-    port: process.env.REDIS_SERVICE_PORT,
-    host: process.env.REDIS_SERVICE_HOST,
+    port: 6379,
+    host: '45.55.25.42',
     namespace: `LOGIN_PROD`,
   },
 }

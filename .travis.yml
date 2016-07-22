@@ -2,6 +2,16 @@ language: node_js
 node_js:
   - "5.1"
 
+services:
+  - mongodb
+  - redis-server
+
+env:
+  - NODE_ENV=travis
+  - MONGO_URL=mongodb://localhost:27017/accounts_test
+  - REDIS_HOST=localhost
+  - REDIS_PORT=6379
+
 cache:
   directories:
     - node_modules
@@ -11,3 +21,6 @@ install:
 
 script:
   - npm test
+
+after_success:
+  "npm run deploy"
