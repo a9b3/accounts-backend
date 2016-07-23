@@ -26,7 +26,7 @@ kind: Deployment
 metadata:
   name: accounts-backend
 spec:
-  replicas: 2
+  replicas: 1
   # pod definition
   template:
     metadata:
