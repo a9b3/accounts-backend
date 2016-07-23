@@ -1,5 +1,7 @@
 # Accounts backend
 
+[![Build Status](https://travis-ci.org/esayemm/accounts.svg?branch=master)](https://travis-ci.org/esayemm/accounts)
+
 Standalone authentication service
 
 ## Requirements
