@@ -1,11 +1,13 @@
+# vim: set syntax=yaml:
+
 # Service
 apiVersion: v1
 kind: Service
 metadata:
-  name: accounts
+  name: accounts-backend
   labels:
-    run: accounts
-    subdomain: accounts
+    run: accounts-backend
+    subdomain: accounts-backend
 spec:
   type: NodePort
   ports:
@@ -13,7 +15,7 @@ spec:
     targetPort: 8080 # containers port
     protocol: TCP
   selector:
-    app: accounts
+    app: accounts-backend
   # sessionAffinity: ClientIP
 
 ---
@@ -22,17 +24,17 @@ spec:
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
-  name: accounts
+  name: accounts-backend
 spec:
   replicas: 2
   # pod definition
   template:
     metadata:
       labels:
-        app: accounts
+        app: accounts-backend
     spec:
       containers:
-      - name: accounts
+      - name: accounts-backend
         image: {{IMAGE_NAME}}
         ports:
         - containerPort: 8080

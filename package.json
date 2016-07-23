@@ -1,5 +1,5 @@
 {
-  "name": "accounts",
+  "name": "accounts-backend",
   "version": "0.1.0",
   "description": "Accounts backend",
   "main": "index.js",
@@ -9,7 +9,7 @@
     "test": "NODE_ENV=test npm run lint && npm run test:js",
     "test:js": "NODE_ENV=test ./node_modules/mocha/bin/mocha --compilers js:babel-register --require babel-polyfill --recursive",
     "test:js:watch": "NODE_ENV=test ./node_modules/mocha/bin/mocha --compilers js:babel-register --require babel-polyfill --watch --recursive",
-    "deploy": "./node_modules/kontinuum-deploy/bin/kontinuum_deploy --input ./deploy/accounts.yaml.tpl --output ./deploy/accounts.yaml --service accounts"
+    "deploy": "./node_modules/kontinuum-deploy/bin/kontinuum_deploy --input ./deploy/accounts-backend.yaml.tpl --output ./deploy/accounts-backend.yaml --service accounts-backend"
   },
   "homepage": "",
   "bugs": {

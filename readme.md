@@ -1,6 +1,6 @@
 # Accounts backend
 
-[![Build Status](https://travis-ci.org/esayemm/accounts.svg?branch=master)](https://travis-ci.org/esayemm/accounts)
+[![Build Status](https://travis-ci.org/esayemm/accounts-backend.svg?branch=master)](https://travis-ci.org/esayemm/accounts-backend)
 
 Standalone authentication service
 
